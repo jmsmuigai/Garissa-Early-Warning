@@ -388,21 +388,21 @@
                     </div>
                 </div>
 
-                <!-- Portal 3: 60-Chapter Narrative Story -->
-                <div class="menu-item" onclick="loadView('OUTPUT/garissa_flood_risk_story.html', '📖 60-Chapter DRM Narrative Story', 'OUTPUT/garissa_flood_risk_story.html')">
+                <!-- Portal 3: Community Participatory Maps & Infographics -->
+                <div class="menu-item" onclick="loadView('OUTPUT/community_participatory_maps.html', '📖 Community Participatory Maps & Infographics', 'OUTPUT/community_participatory_maps.html')">
                     <div class="menu-icon" style="color: var(--purple);">📖</div>
                     <div class="menu-info">
-                        <span class="menu-label">60-Chapter Narrative Story</span>
-                        <span class="menu-desc">Bilingual DRR report portal</span>
+                        <span class="menu-label">Community Participatory Maps</span>
+                        <span class="menu-desc">40+ interactive maps & graphics</span>
                     </div>
                 </div>
 
                 <!-- Portal 4: Community Dashboard -->
-                <div class="menu-item" onclick="loadView('OUTPUT/community_dashboard.html', '📡 Local Chief Risk Dashboard', 'OUTPUT/community_dashboard.html')">
+                <div class="menu-item" onclick="loadView('OUTPUT/community_dashboard.html', '📡 Community Dashboard', 'OUTPUT/community_dashboard.html')">
                     <div class="menu-icon" style="color: var(--orange);">📡</div>
                     <div class="menu-info">
-                        <span class="menu-label">Local Chief Risk Dashboard</span>
-                        <span class="menu-desc">Simplified community warnings</span>
+                        <span class="menu-label">Community Dashboard</span>
+                        <span class="menu-desc">Simplified local warnings & alerts</span>
                     </div>
                 </div>
             </div>
@@ -490,6 +490,15 @@
                 </div>
             </div>
 
+            <!-- ASSET INFO PANEL -->
+            <div class="section-title">🛰️ Selected Asset Telemetry</div>
+            <div id="telemetry-panel" class="advisory-box" style="border-color: var(--cyan); background: rgba(6, 182, 212, 0.04); min-height: 90px; margin-bottom: 15px;">
+                <div style="font-weight: bold; color: var(--cyan); margin-bottom: 5px; font-size: 11px;" id="telemetry-title">No Asset Selected</div>
+                <div id="telemetry-body" style="font-size: 10px; color: var(--text-muted); line-height: 1.4;">
+                    Click on any school, clinic, or borehole marker inside the map viewport to stream live vulnerability neural-network indicators.
+                </div>
+            </div>
+
             <!-- ADVISORY BOX -->
             <div class="section-title">🌿 Strategic Mandate</div>
             <div class="advisory-box">
@@ -539,6 +548,47 @@
             // Find clicked item and make active
             event.currentTarget.classList.add('active');
         }
+
+        // Listen for messages from interactive maps inside the viewport iframe
+        window.addEventListener('message', (event) => {
+            if (event.data && event.data.type === 'marker_click') {
+                const p = event.data.properties;
+                const layer = event.data.layer || 'Asset';
+                
+                let title = "";
+                let body = "";
+                
+                if (layer === 'Schools') {
+                    title = "🏫 " + (p.school_nam || 'School Unit');
+                    body = `<strong>Sub-County:</strong> ${p.sub_county || 'N/A'}<br>
+                            <strong>Status:</strong> ${p.status || 'ACTIVE'}<br>
+                            <strong>Risk Level:</strong> <span style="color:${p.Risk_Level === 'Safe' ? '#10b981' : '#ef4444'}; font-weight:bold;">${p.Risk_Level || 'Safe'}</span><br>
+                            <strong>Distance to Flood:</strong> ${p.Distance_to_Flood_km || '0'} km<br>
+                            <strong>NN Vulnerability:</strong> ${p.Vulnerability_Index || p.NN_Vulnerability_Score || '0.0'}`;
+                } else if (layer === 'Health Facilities') {
+                    title = "🏥 " + (p.health_fac || 'Health Clinic');
+                    body = `<strong>Sub-County:</strong> ${p.sub_county || 'N/A'}<br>
+                            <strong>Status:</strong> ${p.status || 'ACTIVE'}<br>
+                            <strong>Risk Level:</strong> <span style="color:${p.Risk_Level === 'Safe' ? '#10b981' : '#ef4444'}; font-weight:bold;">${p.Risk_Level || 'Safe'}</span><br>
+                            <strong>Distance to Flood:</strong> ${p.Distance_to_Flood_km || '0'} km<br>
+                            <strong>NN Vulnerability:</strong> ${p.Vulnerability_Index || p.NN_Vulnerability_Score || '0.0'}`;
+                } else if (layer === 'Boreholes') {
+                    title = "💧 " + (p.name || 'Borehole');
+                    body = `<strong>Sub-County:</strong> ${p.sub_county || 'N/A'}<br>
+                            <strong>Code ID:</strong> ${p.code || 'N/A'}<br>
+                            <strong>Status:</strong> ${p.status || 'FUNCTIONAL'}<br>
+                            <strong>Risk Level:</strong> <span style="color:${p.Risk_Level === 'Safe' ? '#10b981' : '#ef4444'}; font-weight:bold;">${p.Risk_Level || 'Safe'}</span><br>
+                            <strong>Distance to Flood:</strong> ${p.Distance_to_Flood_km || '0'} km<br>
+                            <strong>NN Vulnerability:</strong> ${p.Vulnerability_Index || p.NN_Vulnerability_Score || '0.0'}`;
+                } else {
+                    title = "📍 Selected Element";
+                    body = `<strong>Layer:</strong> ${layer}<br><strong>Properties:</strong> ${JSON.stringify(p)}`;
+                }
+                
+                document.getElementById('telemetry-title').innerHTML = title;
+                document.getElementById('telemetry-body').innerHTML = body;
+            }
+        });
 
         // Load OpenWeatherMap Live Weather
         async function fetchWeather() {

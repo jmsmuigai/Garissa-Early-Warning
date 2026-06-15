@@ -261,9 +261,9 @@ def assess_infrastructure_risk(infra_gdf, label, flood_union, extreme_risk, high
         'Fafi Sub County': (-1.082, 40.145),
         'Balambala Sub County': (-0.041, 39.638),
         'Ijara Sub County': (-1.783, 40.183),
-        'Lagdera Sub County': (0.728, 39.771),
+        'Lagdera Sub County': (0.445, 39.871),
         'Garissa Sub County': (-0.456, 39.642),
-        'Hulugho Sub County': (-1.850, 40.830)
+        'Hulugho Sub County': (-1.759, 40.788)
     }
     
     def get_subcounty(geom):
@@ -713,9 +713,9 @@ def run_risk_analysis():
             'Fafi Sub County': (-1.082, 40.145),
             'Balambala Sub County': (-0.041, 39.638),
             'Ijara Sub County': (-1.783, 40.183),
-            'Lagdera Sub County': (0.728, 39.771),
+            'Lagdera Sub County': (0.445, 39.871),
             'Garissa Sub County': (-0.456, 39.642),
-            'Hulugho Sub County': (-1.850, 40.830)
+            'Hulugho Sub County': (-1.759, 40.788)
         }
 
         # Create subcounty boundaries

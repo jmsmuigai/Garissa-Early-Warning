@@ -26,20 +26,24 @@ fi
 # 3. Analyze Flood Risk
 echo -e "\n[2/6] Performing Enhanced Flood Risk Analysis..."
 python3 2_flood_risk_analysis.py
-python3 generate_advanced_borehole_map.py
 
-# 4. Generate HTML Dashboard
-echo -e "\n[3/6] Generating Community HTML Dashboard..."
+# 3b. Generate All 7 Interactive HTML Leaflet Maps
+echo -e "\n[2b/6] Generating All 7 Interactive Leaflet Maps..."
+python3 generate_all_interactive_maps.py
+
+# 4. Generate HTML Digital Twin & Community Dashboards
+echo -e "\n[3/6] Generating HTML Dashboards..."
 python3 5_generate_dashboard.py
+python3 generate_community_dashboard.py
 
-# 5. Programmatic Map Generation
-echo -e "\n[4/6] Generating Programmatic Map Gallery (20 Maps)..."
+# 5. Programmatic Map Generation (40 Maps & Infographics)
+echo -e "\n[4/6] Generating 40 Programmatic Maps & Infographics..."
 python3 6_generate_maps.py
 
-# 6. Compile Narrative Story HTML
-echo -e "\n[5/6] Compiling Jupyter Notebook Narrative to HTML..."
+# 6. Compile Narrative Story HTML & Post-Process
+echo -e "\n[5/6] Compiling Jupyter Notebook Narrative..."
 jupyter nbconvert --to html --no-input garissa_elnino_flood_risk.ipynb --output OUTPUT/garissa_flood_risk_story.html
-cp OUTPUT/garissa_flood_risk_story.html garissa_flood_risk_story.html
+python3 post_process_narrative.py
 
 # 7. Export to Looker Studio
 echo -e "\n[6/6] Preparing Looker Studio Exports..."
