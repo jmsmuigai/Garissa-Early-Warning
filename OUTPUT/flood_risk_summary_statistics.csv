@@ -1,0 +1,10 @@
+Layer,Total_Features,Extreme_Risk,High_Risk,Medium_Risk,Low_Risk,Safe,Avg_Distance_to_Flood_km
+Schools,219,15,37,36,40,91,6.54
+Health Facilities,69,5,13,8,12,31,7.46
+Boreholes,247,1,1,241,1,3,1.46
+IDP Camps,4,0,2,2,0,0,0.48
+Towns,9,0,3,1,0,5,12.81
+Roads,5,0,5,0,0,0,0.0
+Wildlife,4,0,0,1,0,3,6.15
+Water Pans,5,0,2,0,1,2,5.2
+Cadastral Parcels,4,0,3,1,0,0,0.29

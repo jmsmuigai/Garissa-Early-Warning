@@ -1,0 +1,76 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python caching
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# API keys and secret files
+.env
+.env.*
+api_keys.js
+OUTPUT/api_keys.js
+
+# Log files
+*.log
+ingestion.log
+1_output.log
+sync_output.log
+
+# Temp files
+boreholes_temp.xlsx
+*temp*
+
+# Heavy Geospatial Databases and Shapefiles (ignore raw shapefiles and GPKG files)
+*.gpkg
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.sbn
+*.sbx
+*.xml
+*.qix
+*.sbn
+*.sbx
+
+# Heavy Geospatial Rasters (elevation and land use models)
+*.tif
+*.tiff
+*.aux.xml
+
+# Raw GIS data directories
+GARISSA BORE HOLES/
+Garissa Schools/
+OSM Roads/
+Pop Census 2019/
+Daadab_camp_blocks/
+Garissa Buildings Clipped/
+Garissa Health Facilities/
+IDP Camps/
+Kenya_SRTM30meters/
+Towns/
+Clipped/
+CSG/
+COUNTY POLICIES/
+7.2-LUC2010/
+GEE_UPLOAD_READY/
+analysis/
+fetchers/
+hdx_data/
+
+# We want to keep geojsons and dashboards in OUTPUT, so do NOT ignore OUTPUT/ entirely
+# but ignore intermediate heavy files in OUTPUT if they match shapefiles/rasters
+OUTPUT/*.gpkg
+OUTPUT/*.tif
+OUTPUT/*.tiff
+OUTPUT/*.aux.xml
