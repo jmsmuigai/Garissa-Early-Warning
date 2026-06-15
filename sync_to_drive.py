@@ -20,7 +20,10 @@ ROOT_FILES = [
     "3_qgis_workspace_builder.py",
     "5_generate_dashboard.py",
     "6_generate_maps.py",
-    "run_full_pipeline.sh"
+    "run_full_pipeline.sh",
+    "index.html",
+    "fast_sync.py",
+    "sync_to_drive.py"
 ]
 
 def safe_copy(src: Path, dst: Path):
