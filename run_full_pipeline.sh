@@ -26,6 +26,7 @@ fi
 # 3. Analyze Flood Risk
 echo -e "\n[2/6] Performing Enhanced Flood Risk Analysis..."
 python3 2_flood_risk_analysis.py
+python3 generate_advanced_borehole_map.py
 
 # 4. Generate HTML Dashboard
 echo -e "\n[3/6] Generating Community HTML Dashboard..."
@@ -37,7 +38,8 @@ python3 6_generate_maps.py
 
 # 6. Compile Narrative Story HTML
 echo -e "\n[5/6] Compiling Jupyter Notebook Narrative to HTML..."
-jupyter nbconvert --to html --no-input garissa_elnino_flood_risk.ipynb --output garissa_flood_risk_story.html
+jupyter nbconvert --to html --no-input garissa_elnino_flood_risk.ipynb --output OUTPUT/garissa_flood_risk_story.html
+cp OUTPUT/garissa_flood_risk_story.html garissa_flood_risk_story.html
 
 # 7. Export to Looker Studio
 echo -e "\n[6/6] Preparing Looker Studio Exports..."

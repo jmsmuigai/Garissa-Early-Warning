@@ -22,9 +22,22 @@ def ingest_and_clean_boreholes():
     """Ingests Excel borehole data, converts to spatial, and cleans via intersection with Garissa boundary."""
     print("🚀 Ingesting Borehole Data...")
     
+    fallback_path = OUTPUT_DIR / "Cleaned_Garissa_Boreholes.geojson"
+    assessed_fallback = OUTPUT_DIR / "boreholes_risk_assessed.geojson"
+    
     if not BOREHOLES_FILE.exists() or BOREHOLES_FILE.stat().st_size < 1000:
-        print(f"⚠️ Borehole file at {BOREHOLES_FILE} is missing, empty, or unmaterialized. Skipping ingestion.")
-        return None
+        print(f"⚠️ Borehole file at {BOREHOLES_FILE} is missing, empty, or unmaterialized.")
+        if fallback_path.exists() and fallback_path.stat().st_size > 1000:
+            print(f"🔄 Falling back to existing cleaned layer: {fallback_path.name}")
+            return gpd.read_file(fallback_path)
+        elif assessed_fallback.exists() and assessed_fallback.stat().st_size > 1000:
+            print(f"🔄 Falling back to existing assessed layer: {assessed_fallback.name}")
+            gdf = gpd.read_file(assessed_fallback)
+            gdf.to_file(fallback_path, driver="GeoJSON")
+            return gdf
+        else:
+            print("❌ No fallback borehole data found. Skipping borehole ingestion.")
+            return None
 
     if not COUNTY_BOUNDARY_FILE.exists():
         print(f"⚠️ Garissa County boundary not found at {COUNTY_BOUNDARY_FILE}")
@@ -34,7 +47,13 @@ def ingest_and_clean_boreholes():
     try:
         df = pd.read_excel(BOREHOLES_FILE)
     except Exception as e:
-        print(f"⚠️ Excel file format cannot be determined or read ({e}). Skipping borehole ingestion.")
+        print(f"⚠️ Excel file format cannot be determined or read ({e}).")
+        if fallback_path.exists() and fallback_path.stat().st_size > 1000:
+            print(f"🔄 Falling back to existing cleaned layer: {fallback_path.name}")
+            return gpd.read_file(fallback_path)
+        elif assessed_fallback.exists() and assessed_fallback.stat().st_size > 1000:
+            print(f"🔄 Falling back to existing assessed layer: {assessed_fallback.name}")
+            return gpd.read_file(assessed_fallback)
         return None
     df.columns = [str(c).lower().strip() for c in df.columns]
     

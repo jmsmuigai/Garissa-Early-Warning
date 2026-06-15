@@ -9,10 +9,12 @@ DRIVE_DIR = Path("/Users/james/Library/CloudStorage/GoogleDrive-jmsmuigai@gmail.
 ROOT_FILES = [
     "garissa_elnino_flood_risk.ipynb",
     "garissa_flood_risk_story.html",
+    "1_data_ingestion.py",
     "2_flood_risk_analysis.py",
     "3_qgis_workspace_builder.py",
     "5_generate_dashboard.py",
     "6_generate_maps.py",
+    "generate_advanced_borehole_map.py",
     "run_full_pipeline.sh",
     "index.html",
     "fast_sync.py",
