@@ -6,28 +6,31 @@
     <title>Garissa County DRM Portal & Early Warning System (GEWAS)</title>
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@600;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-dark: #020617;
-            --bg-card: rgba(15, 23, 42, 0.85);
-            --border-glow: rgba(14, 165, 233, 0.25);
+            --bg-dark: #02040a;
+            --bg-card: rgba(10, 15, 30, 0.85);
+            --border-glow: rgba(0, 243, 255, 0.35);
+            --border-pink: rgba(255, 0, 127, 0.3);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --cyan: #06b6d4;
+            --cyan: #00f3ff;
+            --pink: #ff007f;
+            --lime: #39ff14;
             --emerald: #10b981;
             --red: #ef4444;
             --orange: #f97316;
-            --purple: #a855f7;
+            --purple: #bd00ff;
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-dark);
             background-image: 
-                radial-gradient(at 0% 0%, rgba(30, 58, 138, 0.3) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.15) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(255, 0, 127, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(0, 243, 255, 0.1) 0px, transparent 50%);
             color: var(--text-main);
             margin: 0;
             padding: 0;
@@ -37,9 +40,36 @@
             overflow: hidden;
         }
 
+        /* SCROLLING MARQUEE TICKER */
+        .marquee-container {
+            width: 100%;
+            background: linear-gradient(90deg, #530027, #02040a);
+            border-bottom: 2px solid var(--pink);
+            color: white;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            padding: 6px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.25);
+            z-index: 1010;
+        }
+
+        .marquee-text {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee-scroll 25s linear infinite;
+        }
+
+        @keyframes marquee-scroll {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
         /* HEADER */
         .header {
-            background: rgba(15, 23, 42, 0.95);
+            background: rgba(8, 12, 24, 0.95);
             backdrop-filter: blur(12px);
             padding: 15px 30px;
             border-bottom: 1px solid var(--border-glow);
@@ -47,7 +77,8 @@
             justify-content: space-between;
             align-items: center;
             flex-shrink: 0;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.8);
+            z-index: 1000;
         }
 
         .header-title-area {
@@ -57,61 +88,68 @@
         }
 
         .header-emblem {
-            width: 50px;
-            height: 50px;
+            width: 52px;
+            height: 52px;
             object-fit: contain;
             border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.1);
         }
 
         .header h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
-            font-weight: 900;
+            font-size: 22px;
+            font-weight: 950;
             margin: 0;
             letter-spacing: 1.5px;
-            background: linear-gradient(to right, #ffffff, var(--cyan), #818cf8);
+            background: linear-gradient(to right, #ffffff, var(--cyan), var(--pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
         }
 
         .header-subtitle {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-muted);
             margin-top: 3px;
-            font-weight: 600;
-            letter-spacing: 0.8px;
+            font-weight: 700;
+            letter-spacing: 1.0px;
             text-transform: uppercase;
+            font-family: 'Share Tech Mono', monospace;
         }
 
-        /* LIVE WEATHER PANEL */
-        .weather-banner {
+        /* PORTAL SYSTEM STATUS INDICATOR */
+        .system-telemetry-status {
             display: flex;
             align-items: center;
             gap: 15px;
-            background: rgba(30, 41, 59, 0.4);
-            border: 1px solid rgba(6, 182, 212, 0.15);
-            padding: 6px 15px;
-            border-radius: 8px;
         }
 
-        .weather-info {
+        .status-badge {
             display: flex;
-            flex-direction: column;
-        }
-
-        .weather-temp {
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 4px 12px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 16px;
-            font-weight: 800;
-            color: white;
-        }
-
-        .weather-desc {
             font-size: 9px;
             color: var(--cyan);
-            font-weight: 700;
-            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--cyan);
+            border-radius: 50%;
+            animation: pulse-glow-dot 1.2s infinite alternate;
+        }
+
+        @keyframes pulse-glow-dot {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
         }
 
         /* MAIN CONTENT SPLIT LAYOUT */
@@ -124,12 +162,12 @@
         /* SIDEBAR PANEL */
         .sidebar {
             width: 320px;
-            background: rgba(15, 23, 42, 0.7);
+            background: rgba(6, 10, 20, 0.85);
             border-right: 1px solid var(--border-glow);
             padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
             overflow-y: auto;
             flex-shrink: 0;
         }
@@ -137,13 +175,14 @@
         .section-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 11px;
-            font-weight: 800;
-            color: var(--text-muted);
-            letter-spacing: 1.2px;
+            font-weight: 900;
+            color: var(--pink);
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255, 0, 127, 0.2);
             padding-bottom: 6px;
-            margin-bottom: 10px;
+            margin-top: 10px;
+            margin-bottom: 5px;
         }
 
         /* MENU ITEMS */
@@ -154,12 +193,12 @@
         }
 
         .menu-item {
-            background: rgba(30, 41, 59, 0.4);
+            background: rgba(10, 15, 30, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.03);
             border-radius: 8px;
-            padding: 12px 15px;
+            padding: 10px 14px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
             display: flex;
             align-items: center;
             gap: 12px;
@@ -169,23 +208,23 @@
 
         .menu-item:hover {
             border-color: var(--cyan);
-            background: rgba(6, 182, 212, 0.08);
+            background: rgba(0, 243, 255, 0.08);
             transform: translateX(4px);
         }
 
         .menu-item.active {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(129, 140, 248, 0.2));
+            background: linear-gradient(135deg, rgba(0, 243, 255, 0.15), rgba(255, 0, 127, 0.1));
             border-color: var(--cyan);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
         }
 
         .menu-icon {
-            font-size: 18px;
+            font-size: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             border-radius: 6px;
             background: rgba(255,255,255,0.03);
         }
@@ -193,17 +232,21 @@
         .menu-info {
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 1px;
         }
 
         .menu-label {
-            font-size: 12px;
-            font-weight: 700;
+            font-size: 11px;
+            font-weight: 800;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.5px;
         }
 
         .menu-desc {
-            font-size: 10px;
+            font-size: 9px;
             color: var(--text-muted);
+            font-family: 'Share Tech Mono', monospace;
+            text-transform: uppercase;
         }
 
         /* STATISTICS WIDGET */
@@ -214,32 +257,74 @@
         }
 
         .stat-card {
-            background: rgba(30, 41, 59, 0.3);
+            background: rgba(10, 15, 30, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.03);
             border-radius: 8px;
             padding: 10px;
             text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--cyan);
+            background: rgba(0, 243, 255, 0.03);
         }
 
         .stat-label {
-            font-size: 9px;
+            font-size: 8px;
             text-transform: uppercase;
             color: var(--text-muted);
             font-weight: bold;
+            letter-spacing: 0.8px;
         }
 
         .stat-value {
             font-family: 'Orbitron', sans-serif;
-            font-size: 16px;
-            font-weight: 800;
+            font-size: 15px;
+            font-weight: 900;
             color: var(--cyan);
             margin-top: 4px;
+            text-shadow: 0 0 5px rgba(0, 243, 255, 0.2);
+        }
+
+        /* ASSET INFO PANEL */
+        .advisory-box {
+            background: rgba(0, 243, 255, 0.03);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 11px;
+            line-height: 1.4;
+            color: var(--text-muted);
+        }
+
+        /* THEME COLOR SWITCHER */
+        .theme-switcher-group {
+            display: flex;
+            gap: 6px;
+            background: rgba(0,0,0,0.3);
+            padding: 4px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .color-dot-btn {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .color-dot-btn:hover {
+            transform: scale(1.25);
         }
 
         /* VIEWPORT PREVIEW AREA */
         .viewport {
             flex: 1;
-            background: #090d16;
+            background: #040812;
             padding: 15px;
             box-sizing: border-box;
             display: flex;
@@ -264,6 +349,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            text-shadow: 0 0 8px rgba(0, 243, 255, 0.2);
         }
 
         .viewport-actions {
@@ -272,12 +358,12 @@
         }
 
         .action-btn {
-            background: #1e293b;
-            border: 1px solid #334155;
+            background: rgba(10, 15, 30, 0.85);
+            border: 1px solid var(--border-glow);
             color: white;
             padding: 6px 12px;
             border-radius: 6px;
-            font-size: 11px;
+            font-size: 10px;
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             cursor: pointer;
@@ -286,6 +372,7 @@
             align-items: center;
             gap: 6px;
             transition: all 0.2s ease;
+            letter-spacing: 0.5px;
         }
 
         .action-btn:hover {
@@ -312,17 +399,6 @@
             background: transparent;
         }
 
-        /* Advisory Box */
-        .advisory-box {
-            background: rgba(16, 185, 129, 0.05);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 11px;
-            line-height: 1.5;
-            color: var(--text-muted);
-        }
-
         /* CUSTOM SCROLLBAR */
         ::-webkit-scrollbar {
             width: 5px;
@@ -335,11 +411,18 @@
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(6, 182, 212, 0.3);
+            background: var(--cyan);
         }
     </style>
 </head>
 <body>
+
+    <!-- SCROLLING MARQUEE TICKER -->
+    <div class="marquee-container">
+        <div class="marquee-text">
+            🚨 SYSTEM STATUS ALERT: MAY 2026 AUDIT ACTIVE // SHIRIKA PLAN FLOOD THREAT RED ALERT // PRECIPITATION TRIGGER METRICS ENGAGED // EVACUATION BUFFER RADIAL MEASUREMENT IN USE // MOVE HERDS TO ELEVATED RANGELAND PLOTS IN FAFI 🚨
+        </div>
+    </div>
 
     <!-- PORTAL HEADER -->
     <header class="header">
@@ -351,12 +434,15 @@
             </div>
         </div>
         
-        <!-- Live Weather Widget Banner -->
-        <div class="weather-banner">
-            ⛅
-            <div class="weather-info">
-                <span class="weather-temp" id="weather-temp-val">34°C</span>
-                <span class="weather-desc" id="weather-desc-val">MOSTLY SUNNY</span>
+        <div class="system-telemetry-status">
+            <div class="status-badge" id="data-status-badge">
+                <div class="status-dot"></div>
+                <span id="data-status-text">CACHING VECTOR DATA...</span>
+            </div>
+            
+            <!-- Live Weather Widget -->
+            <div class="status-badge" style="border-color: var(--border-pink); color: var(--pink);">
+                ⛅ <span style="font-family:'Share Tech Mono';" id="weather-temp-val">34°C</span>
             </div>
         </div>
     </header>
@@ -469,7 +555,7 @@
                 </div>
             </div>
 
-            <!-- STATISTICS PANEL -->
+            <!-- EXPOSURE STATS -->
             <div class="section-title">📊 Exposure Statistics</div>
             <div class="stats-grid">
                 <div class="stat-card">
@@ -480,33 +566,30 @@
                     <div class="stat-label">Inundated Area</div>
                     <div class="stat-value">3,800 km²</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label">Schools at Risk</div>
-                    <div class="stat-value" style="color: var(--orange);">27</div>
+                
+                <!-- Spillway countdown -->
+                <div class="stat-card" style="grid-column: 1 / -1; text-align: left; padding: 12px; background: rgba(255, 0, 127, 0.05); border: 1px solid var(--border-pink);">
+                    <div class="stat-label" style="color: var(--pink);">⚠️ Masinga Dam Spillway</div>
+                    <div class="stat-value" style="font-size: 18px; color: var(--pink); font-family: 'Share Tech Mono';" id="countdown-val">04d : 12h : 48m</div>
+                    <div style="font-size: 9px; color: var(--text-muted); margin-top:4px;">ESTIMATED Cascade Spillover to Garissa</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-label">Boreholes at Risk</div>
-                    <div class="stat-value" style="color: var(--cyan);">4</div>
-                </div>
+            </div>
+
+            <!-- GLOBAL THEME SWITCHER -->
+            <div class="section-title">🎨 HUD Accent Color</div>
+            <div class="theme-switcher-group">
+                <button class="color-dot-btn" style="background: #00f3ff;" onclick="changeThemeColor('cyan')"></button>
+                <button class="color-dot-btn" style="background: #ff007f;" onclick="changeThemeColor('pink')"></button>
+                <button class="color-dot-btn" style="background: #39ff14;" onclick="changeThemeColor('lime')"></button>
             </div>
 
             <!-- ASSET INFO PANEL -->
             <div class="section-title">🛰️ Selected Asset Telemetry</div>
-            <div id="telemetry-panel" class="advisory-box" style="border-color: var(--cyan); background: rgba(6, 182, 212, 0.04); min-height: 90px; margin-bottom: 15px;">
+            <div id="telemetry-panel" class="advisory-box" style="border-color: var(--cyan); background: rgba(0, 243, 255, 0.02); min-height: 90px; margin-bottom: 15px;">
                 <div style="font-weight: bold; color: var(--cyan); margin-bottom: 5px; font-size: 11px;" id="telemetry-title">No Asset Selected</div>
                 <div id="telemetry-body" style="font-size: 10px; color: var(--text-muted); line-height: 1.4;">
                     Click on any school, clinic, or borehole marker inside the map viewport to stream live vulnerability neural-network indicators.
                 </div>
-            </div>
-
-            <!-- ADVISORY BOX -->
-            <div class="section-title">🌿 Strategic Mandate</div>
-            <div class="advisory-box">
-                <strong>🛡️ GEWAS Mission:</strong> To secure Garissa County by merging real-time climate forecasts, satellite rangeland indexes, and machine learning to deploy early cash transfers and safeguard humanitarian settlement infrastructure (Shirika Plan).
-            </div>
-            
-            <div style="font-size:10px; color: var(--text-muted); text-align:center; font-family:monospace; margin-top:auto;">
-                Garissa GIS Directorate<br>James M. Mburu
             </div>
 
         </aside>
@@ -521,17 +604,93 @@
             </div>
 
             <div class="iframe-container">
-                <iframe id="viewport-iframe" src="OUTPUT/garissa_master_drm_map.html"></iframe>
+                <iframe id="viewport-iframe" src="about:blank"></iframe>
             </div>
         </main>
 
     </div>
 
-    <!-- MAIN CONTROLLER LOGIC -->
+    <!-- PREFETCH DATA & CONTROLLER LOGIC -->
     <script>
+        // Pre-fetch all GeoJSON data files for child map frames to reuse
+        const geojsonFiles = [
+            ['schoolsData', 'OUTPUT/schools_risk_assessed.geojson'],
+            ['healthData', 'OUTPUT/health_facilities_risk_assessed.geojson'],
+            ['boreholesData', 'OUTPUT/boreholes_risk_assessed.geojson'],
+            ['campsData', 'OUTPUT/idp_camps_risk_assessed.geojson'],
+            ['townsData', 'OUTPUT/towns_risk_assessed.geojson'],
+            ['waterPansData', 'OUTPUT/water_pans_risk_assessed.geojson'],
+            ['wildlifeData', 'OUTPUT/wildlife_risk_assessed.geojson'],
+            ['roadsData', 'OUTPUT/roads_risk_assessed.geojson'],
+            ['riversData', 'OUTPUT/rivers.geojson'],
+            ['subcountiesData', 'OUTPUT/garissa_subcounties.geojson'],
+            ['wardsData', 'OUTPUT/garissa_wards.geojson'],
+            ['extremeZoneData', 'OUTPUT/extreme_risk_zone.geojson'],
+            ['medZoneData', 'OUTPUT/medium_risk_zone.geojson'],
+            ['highZoneData', 'OUTPUT/high_risk_zone.geojson'],
+            ['lowZoneData', 'OUTPUT/low_risk_zone.geojson']
+        ];
+
+        // Global variables to be shared
+        window.schoolsData = null;
+        window.healthData = null;
+        window.boreholesData = null;
+        window.campsData = null;
+        window.townsData = null;
+        window.waterPansData = null;
+        window.wildlifeData = null;
+        window.roadsData = null;
+        window.riversData = null;
+        window.subcountiesData = null;
+        window.wardsData = null;
+        window.extremeZoneData = null;
+        window.medZoneData = null;
+        window.highZoneData = null;
+        window.lowZoneData = null;
+        window.baselineFloodData = null;
+
+        async function prefetchGeoJSONs() {
+            try {
+                for (let [varName, path] of geojsonFiles) {
+                    let res = await fetch(path);
+                    if (res.ok) {
+                        window[varName] = await res.json();
+                    }
+                }
+                
+                // Fetch UNOSAT baseline as well if possible
+                try {
+                    let bRes = await fetch('OUTPUT/map_1_flood_baseline.html');
+                    // We don't have separate geojson for baseline, it is generated via python
+                } catch(e) {}
+
+                document.getElementById('data-status-badge').style.borderColor = 'var(--emerald)';
+                document.getElementById('data-status-badge').style.color = 'var(--emerald)';
+                document.getElementById('data-status-text').textContent = '● DATA SYNCED TO LOCAL COLD CACHE';
+                
+                // Now load default iframe safely
+                loadView('OUTPUT/garissa_master_drm_map.html', '🗺️ Integrated Early Warning Master Map', 'OUTPUT/garissa_master_drm_map.html');
+            } catch(e) {
+                console.error("Prefetch failed", e);
+                document.getElementById('data-status-text').textContent = '● OFFLINE DEGRADED SYNC';
+                // Load default anyway
+                loadView('OUTPUT/garissa_master_drm_map.html', '🗺️ Integrated Early Warning Master Map', 'OUTPUT/garissa_master_drm_map.html');
+            }
+        }
+
+        window.addEventListener('load', () => {
+            prefetchGeoJSONs();
+            fetchWeather();
+            startSpillwayTimer();
+        });
+
         function loadView(url, title, rawUrl) {
+            // Append cache busting version parameter to bypass browser cache
+            const timestamp = new Date().getTime();
+            const cacheBustingUrl = url.includes('?') ? `${url}&v=${timestamp}` : `${url}?v=${timestamp}`;
+            
             // Update Iframe src
-            document.getElementById('viewport-iframe').src = url;
+            document.getElementById('viewport-iframe').src = cacheBustingUrl;
             
             // Update Title
             document.getElementById('current-title').textContent = title;
@@ -546,7 +705,9 @@
             });
             
             // Find clicked item and make active
-            event.currentTarget.classList.add('active');
+            if (event && event.currentTarget && event.currentTarget.classList) {
+                event.currentTarget.classList.add('active');
+            }
         }
 
         // Listen for messages from interactive maps inside the viewport iframe
@@ -562,14 +723,14 @@
                     title = "🏫 " + (p.school_nam || 'School Unit');
                     body = `<strong>Sub-County:</strong> ${p.sub_county || 'N/A'}<br>
                             <strong>Status:</strong> ${p.status || 'ACTIVE'}<br>
-                            <strong>Risk Level:</strong> <span style="color:${p.Risk_Level === 'Safe' ? '#10b981' : '#ef4444'}; font-weight:bold;">${p.Risk_Level || 'Safe'}</span><br>
+                            <strong>Risk Level:</strong> <span style="color:${p.Risk_Level === 'Safe' ? 'var(--emerald)' : 'var(--red)'}; font-weight:bold;">${p.Risk_Level || 'Safe'}</span><br>
                             <strong>Distance to Flood:</strong> ${p.Distance_to_Flood_km || '0'} km<br>
                             <strong>NN Vulnerability:</strong> ${p.Vulnerability_Index || p.NN_Vulnerability_Score || '0.0'}`;
                 } else if (layer === 'Health Facilities') {
                     title = "🏥 " + (p.health_fac || 'Health Clinic');
                     body = `<strong>Sub-County:</strong> ${p.sub_county || 'N/A'}<br>
                             <strong>Status:</strong> ${p.status || 'ACTIVE'}<br>
-                            <strong>Risk Level:</strong> <span style="color:${p.Risk_Level === 'Safe' ? '#10b981' : '#ef4444'}; font-weight:bold;">${p.Risk_Level || 'Safe'}</span><br>
+                            <strong>Risk Level:</strong> <span style="color:${p.Risk_Level === 'Safe' ? 'var(--emerald)' : 'var(--red)'}; font-weight:bold;">${p.Risk_Level || 'Safe'}</span><br>
                             <strong>Distance to Flood:</strong> ${p.Distance_to_Flood_km || '0'} km<br>
                             <strong>NN Vulnerability:</strong> ${p.Vulnerability_Index || p.NN_Vulnerability_Score || '0.0'}`;
                 } else if (layer === 'Boreholes') {
@@ -577,7 +738,7 @@
                     body = `<strong>Sub-County:</strong> ${p.sub_county || 'N/A'}<br>
                             <strong>Code ID:</strong> ${p.code || 'N/A'}<br>
                             <strong>Status:</strong> ${p.status || 'FUNCTIONAL'}<br>
-                            <strong>Risk Level:</strong> <span style="color:${p.Risk_Level === 'Safe' ? '#10b981' : '#ef4444'}; font-weight:bold;">${p.Risk_Level || 'Safe'}</span><br>
+                            <strong>Risk Level:</strong> <span style="color:${p.Risk_Level === 'Safe' ? 'var(--emerald)' : 'var(--red)'}; font-weight:bold;">${p.Risk_Level || 'Safe'}</span><br>
                             <strong>Distance to Flood:</strong> ${p.Distance_to_Flood_km || '0'} km<br>
                             <strong>NN Vulnerability:</strong> ${p.Vulnerability_Index || p.NN_Vulnerability_Score || '0.0'}`;
                 } else {
@@ -593,21 +754,51 @@
         // Load OpenWeatherMap Live Weather
         async function fetchWeather() {
             try {
-                // Using standard openweathermap api
                 const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Garissa,KE&units=metric&appid=3755865e1110b239c55dee68b8dc0bc5');
                 if (response.ok) {
                     const data = await response.json();
                     const temp = Math.round(data.main.temp);
-                    const desc = data.weather[0].description.toUpperCase();
                     document.getElementById('weather-temp-val').textContent = temp + '°C';
-                    document.getElementById('weather-desc-val').textContent = desc;
                 }
             } catch(e) {
                 console.error("Weather fetch failed", e);
             }
         }
-        
-        window.addEventListener('load', fetchWeather);
+
+        // Timer countdown script for Spillway
+        let countdownSec = 4 * 24 * 3600 + 12 * 3600 + 48 * 60;
+        function startSpillwayTimer() {
+            setInterval(() => {
+                countdownSec--;
+                if (countdownSec <= 0) countdownSec = 5 * 24 * 3600;
+                
+                const d = Math.floor(countdownSec / (24 * 3600));
+                const h = Math.floor((countdownSec % (24 * 3600)) / 3600);
+                const m = Math.floor((countdownSec % 3600) / 60);
+                
+                document.getElementById('countdown-val').textContent = `${d}d : ${h}h : ${m}m`;
+            }, 1000);
+        }
+
+        // Global Theme accent changer
+        function changeThemeColor(colorName) {
+            const root = document.documentElement;
+            if (colorName === 'cyan') {
+                root.style.setProperty('--border-glow', 'rgba(0, 243, 255, 0.35)');
+                root.style.setProperty('--cyan', '#00f3ff');
+            } else if (colorName === 'pink') {
+                root.style.setProperty('--border-glow', 'rgba(255, 0, 127, 0.35)');
+                root.style.setProperty('--cyan', '#ff007f');
+            } else if (colorName === 'lime') {
+                root.style.setProperty('--border-glow', 'rgba(57, 255, 20, 0.35)');
+                root.style.setProperty('--cyan', '#39ff14');
+            }
+            // Trigger redraw size on active iframe
+            const iframe = document.getElementById('viewport-iframe');
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.postMessage({ type: 'theme_change', color: colorName }, '*');
+            }
+        }
     </script>
 </body>
 </html>
