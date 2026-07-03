@@ -466,6 +466,21 @@ def get_leaflet_template(title, caption, download_filename, default_layers_json,
             padding: 15px;
             box-shadow: 0 0 20px rgba(255, 0, 127, 0.25);
         }}
+        @media (max-width: 768px) {{
+            .buffer-config-card {{
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 90%;
+                max-width: 350px;
+            }}
+            .tilt-controls-panel {{
+                display: none !important; /* Hide 3D tilt controls on mobile for performance */
+            }}
+            #map {{
+                transform: none !important; /* Disable heavy 3D transforms on mobile */
+            }}
+        }}
 
         .buffer-config-card h4 {{
             margin: 0 0 10px 0;
@@ -818,7 +833,10 @@ def get_leaflet_template(title, caption, download_filename, default_layers_json,
 
             <!-- BUFFER CONFIG CARD -->
             <div class="buffer-config-card" id="buffer-card">
-                <h4>⭕ Radial Buffer Analysis</h4>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(255,0,127,0.2); padding-bottom: 5px;">
+                    <h4 style="margin:0; border:none; padding:0;">⭕ Radial Buffer Analysis</h4>
+                    <button onclick="toggleBufferTool()" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:16px;">✖</button>
+                </div>
                 <div style="font-size:10px; color:var(--text-muted); margin-bottom:8px; line-height:1.3;">
                     Click anywhere on the map to calculate flood risk buffers and identify exposed facilities.
                 </div>
@@ -1607,6 +1625,8 @@ def get_leaflet_template(title, caption, download_filename, default_layers_json,
                         ['campsData', 'idp_camps_risk_assessed.geojson'],
                         ['townsData', 'towns_risk_assessed.geojson'],
                         ['waterPansData', 'water_pans_risk_assessed.geojson'],
+                        ['townsData', 'towns_risk_assessed.geojson'],
+                        ['waterPansData', 'water_pans_risk_assessed.geojson'],
                         ['wildlifeData', 'wildlife_risk_assessed.geojson'],
                         ['roadsData', 'roads_risk_assessed.geojson'],
                         ['riversData', 'rivers.geojson'],
@@ -1820,7 +1840,55 @@ def generate_all_interactive_maps():
         )
         f.write(html)
 
-    print("🎉 All 10 interactive HTML maps successfully overhauled with Neon-Robotic HUD layouts!")
+    # 11. idp_camps_risk_map.html
+    print("📁 Generating idp_camps_risk_map.html...")
+    default_layers_camps = json.dumps([
+        "⛺ Refugee & IDP Settlements", "Wards Boundaries", "Sub-Counties Boundaries",
+        "🔴 High Risk Zone (~500m)", "🟠 Medium Risk Zone (~1.5km)", "🟣 Extreme Risk Zone (~5.5km)"
+    ])
+    with open(OUTPUT_DIR / "idp_camps_risk_map.html", "w", encoding="utf-8") as f:
+        html = get_leaflet_template(
+            "⛺ Refugee & IDP Camps Exposure Map",
+            "Projected El Niño 2026 Inundation Exposure Risk for Dadaab Complex & Settlements.",
+            "Garissa_IDP_Camps_Risk_Assessed",
+            default_layers_camps,
+            "campsData"
+        )
+        f.write(html)
+
+    # 12. towns_risk_map.html
+    print("📁 Generating towns_risk_map.html...")
+    default_layers_towns = json.dumps([
+        "🏘️ Township Center Hubs", "Wards Boundaries", "Sub-Counties Boundaries",
+        "🔴 High Risk Zone (~500m)", "🟠 Medium Risk Zone (~1.5km)", "🟣 Extreme Risk Zone (~5.5km)"
+    ])
+    with open(OUTPUT_DIR / "towns_risk_map.html", "w", encoding="utf-8") as f:
+        html = get_leaflet_template(
+            "🏙️ Major Towns Risk Map",
+            "Projected El Niño 2026 Inundation Exposure Risk for Urban Centers.",
+            "Garissa_Towns_Risk_Assessed",
+            default_layers_towns,
+            "townsData"
+        )
+        f.write(html)
+
+    # 13. water_pans_risk_map.html
+    print("📁 Generating water_pans_risk_map.html...")
+    default_layers_water_pans = json.dumps([
+        "🪣 Rangeland Water Pans", "Wards Boundaries", "Sub-Counties Boundaries",
+        "🔴 High Risk Zone (~500m)", "🟠 Medium Risk Zone (~1.5km)", "🟣 Extreme Risk Zone (~5.5km)"
+    ])
+    with open(OUTPUT_DIR / "water_pans_risk_map.html", "w", encoding="utf-8") as f:
+        html = get_leaflet_template(
+            "🪣 Water Pans Exposure Map",
+            "Projected El Niño 2026 Inundation Exposure Risk for Surface Water Pans.",
+            "Garissa_Water_Pans_Risk_Assessed",
+            default_layers_water_pans,
+            "waterPansData"
+        )
+        f.write(html)
+
+    print("🎉 All interactive HTML maps successfully overhauled with Neon-Robotic HUD layouts!")
 
 if __name__ == "__main__":
     generate_all_interactive_maps()

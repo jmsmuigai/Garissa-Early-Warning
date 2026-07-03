@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🗺️ Integrated early warning & Adaptation Master Map</title>
+    <title>⛺ Refugee & IDP Camps Exposure Map</title>
     
     <!-- Leaflet & Fonts -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -738,8 +738,8 @@
 
             <!-- HEADER BANNER -->
             <div class="glass-panel map-header">
-                <h1>🗺️ Integrated early warning & Adaptation Master Map</h1>
-                <p class="map-caption">Garissa County Early Warning & Adaptation System (GEWAS). Defaults to Google Hybrid imagery with interactive layers.</p>
+                <h1>⛺ Refugee & IDP Camps Exposure Map</h1>
+                <p class="map-caption">Projected El Niño 2026 Inundation Exposure Risk for Dadaab Complex & Settlements.</p>
             </div>
 
             <!-- VIEW SWITCHER OVERLAY -->
@@ -1168,7 +1168,7 @@
             }
 
             // Add layers according to default parameters
-            const defaults = ["\ud83c\udfeb Schools (Styled)", "\ud83c\udfe5 Health Clinics (Styled)", "\ud83d\udca7 Boreholes (Styled)", "\u26fa Refugee & IDP Settlements", "Wards Boundaries", "Sub-Counties Boundaries", "Rivers & Drainage", "\ud83d\udd34 High Risk Zone (~500m)", "\ud83c\udf0a April 2024 Flood Baseline", "\ud83d\udd4c Mosques (Styled)", "\ud83d\uded6 Bullas/Neighborhoods", "\ud83d\udccd Named POIs"];
+            const defaults = ["\u26fa Refugee & IDP Settlements", "Wards Boundaries", "Sub-Counties Boundaries", "\ud83d\udd34 High Risk Zone (~500m)", "\ud83d\udfe0 Medium Risk Zone (~1.5km)", "\ud83d\udfe3 Extreme Risk Zone (~5.5km)"];
             for (let name in overlays) {
                 if (defaults.includes(name)) {
                     overlays[name].addTo(map);
@@ -1513,7 +1513,7 @@
 
         // GeoJSON Downloader
         function downloadActiveLayer() {
-            let targetVarName = "schoolsData";
+            let targetVarName = "campsData";
             let targetData = null;
             try {
                 if (targetVarName === 'schoolsData') targetData = schoolsData;
@@ -1536,7 +1536,7 @@
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(targetData));
             const dl = document.createElement('a');
             dl.setAttribute("href", dataStr);
-            dl.setAttribute("download", "Garissa_GEWAS_Early_Warning_Master_Layers.geojson");
+            dl.setAttribute("download", "Garissa_IDP_Camps_Risk_Assessed.geojson");
             document.body.appendChild(dl);
             dl.click();
             dl.remove();
