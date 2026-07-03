@@ -458,8 +458,8 @@
             .sidebar {
                 position: absolute;
                 top: 0;
-                left: -100%;
-                width: 280px;
+                left: -320px; /* Fully hide off screen */
+                width: 300px;
                 height: 100%;
                 z-index: 1000;
                 transition: left 0.3s ease;
@@ -494,6 +494,42 @@
                 font-size: 9px;
                 padding: 5px 8px;
             }
+        }
+
+        /* FLOATING TELEMETRY PANEL */
+        .floating-telemetry {
+            display: none;
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background: rgba(10, 15, 30, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--cyan);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            z-index: 2000;
+        }
+        .telemetry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+            padding-bottom: 8px;
+        }
+        .close-telemetry-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .close-telemetry-btn:hover {
+            color: var(--pink);
         }
     </style>
 </head>
@@ -738,14 +774,8 @@
                 <button class="color-dot-btn" style="background: #39ff14;" onclick="changeThemeColor('lime')"></button>
             </div>
 
-            <!-- ASSET INFO PANEL -->
-            <div class="section-title">🛰️ Selected Asset Telemetry</div>
-            <div id="telemetry-panel" class="advisory-box" style="border-color: var(--cyan); background: rgba(0, 243, 255, 0.02); min-height: 90px; margin-bottom: 15px;">
-                <div style="font-weight: bold; color: var(--cyan); margin-bottom: 5px; font-size: 11px;" id="telemetry-title">No Asset Selected</div>
-                <div id="telemetry-body" style="font-size: 10px; color: var(--text-muted); line-height: 1.4;">
-                    Click on any school, clinic, or borehole marker inside the map viewport to stream live vulnerability neural-network indicators.
-                </div>
-            </div>
+            <!-- ASSET INFO PANEL REMOVED FROM HERE (moved to floating panel) -->
+
 
         </aside>
 
@@ -761,6 +791,17 @@
 
             <div class="iframe-container">
                 <iframe id="viewport-iframe" src="about:blank"></iframe>
+            </div>
+
+            <!-- FLOATING TELEMETRY PANEL -->
+            <div id="telemetry-panel" class="floating-telemetry">
+                <div class="telemetry-header">
+                    <span id="telemetry-title" style="font-weight: bold; color: var(--cyan);">No Asset Selected</span>
+                    <button class="close-telemetry-btn" onclick="document.getElementById('telemetry-panel').style.display='none'">✖</button>
+                </div>
+                <div id="telemetry-body" style="font-size: 10px; color: var(--text-muted); line-height: 1.4;">
+                    Click on any school, clinic, or borehole marker inside the map viewport to stream live vulnerability neural-network indicators.
+                </div>
             </div>
         </main>
 
@@ -864,6 +905,18 @@
             if (event && event.currentTarget && event.currentTarget.classList) {
                 event.currentTarget.classList.add('active');
             }
+
+            // Close mobile menu if it is open
+            const sidebar = document.getElementById('main-sidebar');
+            const overlay = document.getElementById('mobile-sidebar-overlay');
+            if (sidebar && sidebar.classList.contains('mobile-open')) {
+                sidebar.classList.remove('mobile-open');
+                overlay.classList.remove('mobile-open');
+            }
+            
+            // Hide telemetry panel on map change
+            const telemetryPanel = document.getElementById('telemetry-panel');
+            if (telemetryPanel) telemetryPanel.style.display = 'none';
         }
 
         // Listen for messages from interactive maps inside the viewport iframe
@@ -925,6 +978,7 @@
                 
                 document.getElementById('telemetry-title').innerHTML = title;
                 document.getElementById('telemetry-body').innerHTML = body;
+                document.getElementById('telemetry-panel').style.display = 'block';
             }
         });
 
