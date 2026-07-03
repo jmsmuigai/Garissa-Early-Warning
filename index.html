@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Garissa County DRM Portal & Early Warning System (GEWAS)</title>
     
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#02040a">
+    <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Flag_of_Garissa_County.png/192px-Flag_of_Garissa_County.png">
+    
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@600;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     
@@ -413,6 +418,83 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--cyan);
         }
+
+        /* MOBILE RESPONSIVE STYLES */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--cyan);
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            .header {
+                padding: 10px 15px;
+            }
+            .header-emblem {
+                width: 36px;
+                height: 36px;
+            }
+            .header h1 {
+                font-size: 14px;
+            }
+            .header-subtitle {
+                font-size: 8px;
+            }
+            .system-telemetry-status {
+                display: none; /* Hide on small mobile to save space */
+            }
+            .main-container {
+                flex-direction: column;
+                position: relative;
+            }
+            .sidebar {
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100%;
+                z-index: 1000;
+                transition: left 0.3s ease;
+                background: rgba(6, 10, 20, 0.98);
+                backdrop-filter: blur(20px);
+                border-right: 1px solid var(--border-glow);
+            }
+            .sidebar.mobile-open {
+                left: 0;
+            }
+            .sidebar-overlay {
+                display: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 999;
+                backdrop-filter: blur(2px);
+            }
+            .sidebar-overlay.mobile-open {
+                display: block;
+            }
+            .viewport {
+                padding: 10px;
+            }
+            .viewport-title {
+                font-size: 11px;
+            }
+            .action-btn {
+                font-size: 9px;
+                padding: 5px 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -427,6 +509,7 @@
     <!-- PORTAL HEADER -->
     <header class="header">
         <div class="header-title-area">
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Flag_of_Garissa_County.png/800px-Flag_of_Garissa_County.png" class="header-emblem" alt="Garissa County Emblem" onerror="this.src='https://placehold.co/100/1e293b/06b6d4?text=DRM';">
             <div>
                 <h1>GARISSA County DRM Early Warning System (GEWAS)</h1>
@@ -450,8 +533,11 @@
     <!-- MAIN PORTAL BODY -->
     <div class="main-container">
         
+        <!-- SIDEBAR OVERLAY FOR MOBILE -->
+        <div class="sidebar-overlay" id="mobile-sidebar-overlay" onclick="toggleMobileMenu()"></div>
+
         <!-- SIDEBAR NAVIGATION & TELEMETRY -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="main-sidebar">
             
             <div class="section-title">🛰️ Strategic Portals & Dashboards</div>
             
@@ -668,6 +754,7 @@
             <div class="viewport-header">
                 <div class="viewport-title" id="current-title">🗺️ Integrated Early Warning Master Map</div>
                 <div class="viewport-actions">
+                    <button id="btn-share" class="action-btn" onclick="sharePortal()">📲 Share</button>
                     <a id="btn-open-fullscreen" href="OUTPUT/garissa_master_drm_map.html" target="_blank" class="action-btn">🔗 Open Fullscreen </a>
                 </div>
             </div>
@@ -889,6 +976,40 @@
             if (iframe && iframe.contentWindow) {
                 iframe.contentWindow.postMessage({ type: 'theme_change', color: colorName }, '*');
             }
+        }
+        
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('main-sidebar');
+            const overlay = document.getElementById('mobile-sidebar-overlay');
+            sidebar.classList.toggle('mobile-open');
+            overlay.classList.toggle('mobile-open');
+        }
+
+        // Native Share API
+        async function sharePortal() {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Garissa DRM Portal',
+                        text: 'Garissa County Multi-Hazard Early Warning System.',
+                        url: window.location.href,
+                    });
+                } catch (err) {
+                    console.log('Share error:', err);
+                }
+            } else {
+                alert("Sharing is not supported on this device/browser.");
+            }
+        }
+
+        // Register Service Worker for PWA Offline Mode
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker registered', reg))
+                    .catch(err => console.error('Service Worker registration failed', err));
+            });
         }
     </script>
 </body>
