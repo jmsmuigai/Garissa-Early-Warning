@@ -27,7 +27,6 @@ sync_output.log
 
 # Temp files
 boreholes_temp.xlsx
-*temp*
 
 # Heavy Geospatial Databases and Shapefiles (ignore raw shapefiles and GPKG files)
 *.gpkg

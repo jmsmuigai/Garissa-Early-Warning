@@ -1,0 +1,29 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {"fieldPath": "department", "order": "ASCENDING"},
+        {"fieldPath": "jobGroup", "order": "ASCENDING"}
+      ]
+    },
+    {
+      "collectionGroup": "users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {"fieldPath": "department", "order": "ASCENDING"},
+        {"fieldPath": "createdAt", "order": "DESCENDING"}
+      ]
+    },
+    {
+      "collectionGroup": "users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {"fieldPath": "upn", "order": "ASCENDING"},
+        {"fieldPath": "department", "order": "ASCENDING"}
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

@@ -379,6 +379,20 @@ def build_qgis_workspace():
             "Refugee Camps", settle_group, project,
             style_func=lambda l: _apply_risk_symbology(l, "point", "triangle")
         )
+
+        # Bullas - Risk Assessed
+        _load_vector(
+            OUTPUT_DIR / "bullas_risk_assessed.geojson",
+            "Bullas & Neighborhoods", settle_group, project,
+            style_func=lambda l: _apply_risk_symbology(l, "point", "pentagon")
+        )
+
+        # POIs - Risk Assessed
+        _load_vector(
+            OUTPUT_DIR / "named_pois_risk_assessed.geojson",
+            "Named POIs", settle_group, project,
+            style_func=lambda l: _apply_risk_symbology(l, "point", "star")
+        )
         
         # Dadaab Camp blocks
         dadaab_blocks = [
@@ -472,7 +486,8 @@ def build_qgis_workspace():
             ("schools_risk_assessed.geojson",          "Schools - Risk Assessment"),
             ("health_facilities_risk_assessed.geojson", "Health Facilities - Risk Assessment"),
             ("boreholes_risk_assessed.geojson",         "Boreholes - Risk Assessment"),
-            ("water_pans_risk_assessed.geojson",        "Water Pans - Risk Assessment")
+            ("water_pans_risk_assessed.geojson",        "Water Pans - Risk Assessment"),
+            ("mosques_risk_assessed.geojson",           "Mosques - Risk Assessment")
         ]
         for fname, lname in infra_risk_layers:
             marker = 'circle'
@@ -484,6 +499,8 @@ def build_qgis_workspace():
                 marker = 'hexagon'
             elif 'boreholes' in fname:
                 marker = 'circle'
+            elif 'mosques' in fname:
+                marker = 'pentagon'
                 
             _load_vector(
                 OUTPUT_DIR / fname, lname, infra_group, project,

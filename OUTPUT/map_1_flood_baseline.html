@@ -851,6 +851,9 @@
         let wildlifeData = { "type": "FeatureCollection", "features": [] };
         let roadsData = { "type": "FeatureCollection", "features": [] };
         let riversData = { "type": "FeatureCollection", "features": [] };
+        let mosquesData = { "type": "FeatureCollection", "features": [] };
+        let bullasData = { "type": "FeatureCollection", "features": [] };
+        let poisData = { "type": "FeatureCollection", "features": [] };
         let subcountiesData = { "type": "FeatureCollection", "features": [] };
         let wardsData = { "type": "FeatureCollection", "features": [] };
         let extremeZoneData = { "type": "FeatureCollection", "features": [] };
@@ -1107,6 +1110,45 @@
                 });
             }
 
+            if (typeof mosquesData !== 'undefined' && mosquesData.features && mosquesData.features.length > 0) {
+                overlays["🕌 Mosques (Styled)"] = L.geoJSON(mosquesData, {
+                    pointToLayer: function(f, latlng) {
+                        const risk = f.properties.Risk_Level || 'Safe';
+                        return L.marker(latlng, { icon: getCyberIcon(riskColors[risk] || '#9ca3af', 'M') });
+                    },
+                    onEachFeature: function(f, l) {
+                        l.bindPopup(buildPopupTable(f.properties.name || 'Mosque', f.properties.id || 'N/A', 'ACTIVE', f.properties.Risk_Level || 'Safe', f.properties.Distance_to_Flood_km || '0.0', f.properties.Vulnerability_Index || f.properties.NN_Vulnerability_Score || '0.0', '🕌'));
+                        l.on('click', () => notifyParent(f, 'Mosques'));
+                    }
+                });
+            }
+
+            if (typeof bullasData !== 'undefined' && bullasData.features && bullasData.features.length > 0) {
+                overlays["🛖 Bullas/Neighborhoods"] = L.geoJSON(bullasData, {
+                    pointToLayer: function(f, latlng) {
+                        const risk = f.properties.Risk_Level || 'Safe';
+                        return L.marker(latlng, { icon: getCyberIcon(riskColors[risk] || '#9ca3af', 'B') });
+                    },
+                    onEachFeature: function(f, l) {
+                        l.bindPopup(buildPopupTable(f.properties.name || 'Bulla', f.properties.id || 'N/A', 'ACTIVE', f.properties.Risk_Level || 'Safe', f.properties.Distance_to_Flood_km || '0.0', f.properties.Vulnerability_Index || f.properties.NN_Vulnerability_Score || '0.0', '🛖'));
+                        l.on('click', () => notifyParent(f, 'Bullas'));
+                    }
+                });
+            }
+
+            if (typeof poisData !== 'undefined' && poisData.features && poisData.features.length > 0) {
+                overlays["📍 Named POIs"] = L.geoJSON(poisData, {
+                    pointToLayer: function(f, latlng) {
+                        const risk = f.properties.Risk_Level || 'Safe';
+                        return L.marker(latlng, { icon: getCyberIcon(riskColors[risk] || '#9ca3af', 'P') });
+                    },
+                    onEachFeature: function(f, l) {
+                        l.bindPopup(buildPopupTable(f.properties.name || 'POI', f.properties.id || 'N/A', 'ACTIVE', f.properties.Risk_Level || 'Safe', f.properties.Distance_to_Flood_km || '0.0', f.properties.Vulnerability_Index || f.properties.NN_Vulnerability_Score || '0.0', '📍'));
+                        l.on('click', () => notifyParent(f, 'POIs'));
+                    }
+                });
+            }
+
             // Add layers according to default parameters
             const defaults = ["\ud83c\udf0a April 2024 Flood Baseline", "Wards Boundaries", "Sub-Counties Boundaries", "Rivers & Drainage"];
             for (let name in overlays) {
@@ -1292,10 +1334,10 @@
             document.getElementById('buffer-results').innerHTML = `
                 <div style="font-weight:bold; color:var(--pink); margin-bottom:5px;">📍 BUFFER RISK RESULTS</div>
                 <div style="font-size:10px; line-height:1.4;">
-                    <strong>Center:</strong> \${e.latlng.lat.toFixed(4)}, \${e.latlng.lng.toFixed(4)}<br>
-                    <strong>Exposed Schools:</strong> <span style="color:var(--pink)">\${schoolsCount}</span><br>
-                    <strong>Exposed Clinics:</strong> <span style="color:var(--orange)">\${clinicsCount}</span><br>
-                    <strong>Exposed Boreholes:</strong> <span style="color:var(--cyan)">\${boreholesCount}</span>
+                    <strong>Center:</strong> ${e.latlng.lat.toFixed(4)}, ${e.latlng.lng.toFixed(4)}<br>
+                    <strong>Exposed Schools:</strong> <span style="color:var(--pink)">${schoolsCount}</span><br>
+                    <strong>Exposed Clinics:</strong> <span style="color:var(--orange)">${clinicsCount}</span><br>
+                    <strong>Exposed Boreholes:</strong> <span style="color:var(--cyan)">${boreholesCount}</span>
                 </div>
                 <div style="font-size:9px; color:var(--text-muted); margin-top:5px; font-style:italic;">
                     Protocol: Cash trigger threshold crossed within buffer.
@@ -1369,6 +1411,45 @@
                     });
                 });
             }
+            
+            if (typeof mosquesData !== 'undefined' && mosquesData.features) {
+                mosquesData.features.forEach(f => {
+                    searchableAssets.push({
+                        name: f.properties.name || 'Mosque',
+                        type: 'Mosque',
+                        risk: f.properties.Risk_Level || 'Safe',
+                        lat: f.geometry.coordinates[1],
+                        lng: f.geometry.coordinates[0],
+                        feature: f
+                    });
+                });
+            }
+            
+            if (typeof bullasData !== 'undefined' && bullasData.features) {
+                bullasData.features.forEach(f => {
+                    searchableAssets.push({
+                        name: f.properties.name || 'Bulla',
+                        type: 'Bulla',
+                        risk: f.properties.Risk_Level || 'Safe',
+                        lat: f.geometry.coordinates[1],
+                        lng: f.geometry.coordinates[0],
+                        feature: f
+                    });
+                });
+            }
+            
+            if (typeof poisData !== 'undefined' && poisData.features) {
+                poisData.features.forEach(f => {
+                    searchableAssets.push({
+                        name: f.properties.name || 'POI',
+                        type: 'POI',
+                        risk: f.properties.Risk_Level || 'Safe',
+                        lat: f.geometry.coordinates[1],
+                        lng: f.geometry.coordinates[0],
+                        feature: f
+                    });
+                });
+            }
 
             filterAssetsList();
         }
@@ -1387,10 +1468,10 @@
                 row.onclick = () => focusAsset(item);
                 row.innerHTML = `
                     <div style="display:flex; flex-direction:column;">
-                        <span class="asset-name">\${item.name}</span>
-                        <span class="asset-type">\${item.type}</span>
+                        <span class="asset-name">${item.name}</span>
+                        <span class="asset-type">${item.type}</span>
                     </div>
-                    <span class="asset-risk" style="color:\${riskColor}">\${item.risk}</span>
+                    <span class="asset-risk" style="color:${riskColor}">${item.risk}</span>
                 `;
                 listEl.appendChild(row);
             });
@@ -1421,6 +1502,9 @@
                 else if (targetVarName === 'healthData') targetData = healthData;
                 else if (targetVarName === 'boreholesData') targetData = boreholesData;
                 else if (targetVarName === 'riversData') targetData = riversData;
+                else if (targetVarName === 'mosquesData') targetData = mosquesData;
+                else if (targetVarName === 'bullasData') targetData = bullasData;
+                else if (targetVarName === 'poisData') targetData = poisData;
                 else if (targetVarName === 'subcountiesData') targetData = subcountiesData;
                 else if (targetVarName === 'baselineFloodData') targetData = baselineFloodData;
                 else targetData = schoolsData; // Fallback
@@ -1452,6 +1536,9 @@
                 wildlifeData = window.parent.wildlifeData;
                 roadsData = window.parent.roadsData;
                 riversData = window.parent.riversData;
+                mosquesData = window.parent.mosquesData;
+                bullasData = window.parent.bullasData;
+                poisData = window.parent.poisData;
                 subcountiesData = window.parent.subcountiesData;
                 wardsData = window.parent.wardsData;
                 extremeZoneData = window.parent.extremeZoneData;
@@ -1475,6 +1562,9 @@
                         ['wildlifeData', 'wildlife_risk_assessed.geojson'],
                         ['roadsData', 'roads_risk_assessed.geojson'],
                         ['riversData', 'rivers.geojson'],
+                        ['mosquesData', 'mosques_risk_assessed.geojson'],
+                        ['bullasData', 'bullas_risk_assessed.geojson'],
+                        ['poisData', 'named_pois_risk_assessed.geojson'],
                         ['subcountiesData', 'garissa_subcounties.geojson'],
                         ['wardsData', 'garissa_wards.geojson'],
                         ['extremeZoneData', 'extreme_risk_zone.geojson'],
@@ -1497,6 +1587,9 @@
                     wildlifeData = window.wildlifeData;
                     roadsData = window.roadsData;
                     riversData = window.riversData;
+                    mosquesData = window.mosquesData;
+                    bullasData = window.bullasData;
+                    poisData = window.poisData;
                     subcountiesData = window.subcountiesData;
                     wardsData = window.wardsData;
                     extremeZoneData = window.extremeZoneData;

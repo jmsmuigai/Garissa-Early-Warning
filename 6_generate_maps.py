@@ -79,6 +79,9 @@ def main():
     water_pans_gdf = load_layer(OUTPUT_DIR / "water_pans_risk_assessed.geojson")
     subcounties_gdf = load_layer(OUTPUT_DIR / "garissa_subcounties.geojson")
     wards_gdf = load_layer(OUTPUT_DIR / "garissa_wards.geojson")
+    mosques_gdf = load_layer(OUTPUT_DIR / "mosques_risk_assessed.geojson")
+    bullas_gdf = load_layer(OUTPUT_DIR / "bullas_risk_assessed.geojson")
+    pois_gdf = load_layer(OUTPUT_DIR / "named_pois_risk_assessed.geojson")
     
     dagahaley = load_layer(OUTPUT_DIR / "Dagahaley.geojson")
     hagadera = load_layer(OUTPUT_DIR / "Hagadera.geojson")
@@ -525,6 +528,8 @@ def main():
       - 🏫 Schools: 52 units inside flood buffer zones.
       - 🏥 Health Facilities: 18 clinics vulnerable to cold-chain loss.
       - 💧 Clean Water Boreholes: 4 humanitarian points inside risk buffers.
+      - 🕌 Mosques: Active community mobilization centers in flood zones.
+      - 🛖 Bullas/POIs: Key urban/informal settlements tracked.
       - 🏟️ Water Pans: 28 water pans requiring spillway clearing.
       - 🦒 Endangered Wildlife (Hirola Antelope): Hulugho/Ijara habitats exposed.
       
@@ -536,7 +541,37 @@ def main():
     ax.text(0.05, 0.5, infographic_text, color='#f8fafc', fontsize=9, fontname='monospace', va='center')
     save_plot(fig, "40_comprehensive_early_warning_summary.png")
 
-    print(f"\n🎉 Programmatic Map & Infographic Exporter complete! 40 maps created.")
+    # 41. Mosques Exposure Risk
+    fig, ax = setup_plot("Mosques & Islamic Centers Inundation Risk")
+    if high_zone is not None:
+        high_zone.plot(ax=ax, color='#dc2626', alpha=0.15)
+    sc = plot_vulnerability(mosques_gdf, ax)
+    if sc:
+        cbar = fig.colorbar(sc, ax=ax, shrink=0.6, pad=0.02)
+        cbar.set_label('Vulnerability Index', color='#ffffff', size=9)
+    save_plot(fig, "41_mosques_exposure_risk.png")
+
+    # 42. Bullas / Neighborhoods Exposure Risk
+    fig, ax = setup_plot("Garissa Bullas & Neighborhoods Flood Vulnerability")
+    if high_zone is not None:
+        high_zone.plot(ax=ax, color='#dc2626', alpha=0.15)
+    sc = plot_vulnerability(bullas_gdf, ax)
+    if sc:
+        cbar = fig.colorbar(sc, ax=ax, shrink=0.6, pad=0.02)
+        cbar.set_label('Vulnerability Index', color='#ffffff', size=9)
+    save_plot(fig, "42_bullas_exposure_risk.png")
+
+    # 43. POIs Exposure Risk
+    fig, ax = setup_plot("Named POIs & Vital Infrastructure Risk")
+    if high_zone is not None:
+        high_zone.plot(ax=ax, color='#dc2626', alpha=0.15)
+    sc = plot_vulnerability(pois_gdf, ax)
+    if sc:
+        cbar = fig.colorbar(sc, ax=ax, shrink=0.6, pad=0.02)
+        cbar.set_label('Vulnerability Index', color='#ffffff', size=9)
+    save_plot(fig, "43_pois_exposure_risk.png")
+
+    print(f"\n🎉 Programmatic Map & Infographic Exporter complete! 43 maps created.")
 
 if __name__ == "__main__":
     main()

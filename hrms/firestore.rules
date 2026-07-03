@@ -1,0 +1,85 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'hr_director', 'hr_officer'];
+    }
+
+    function isSupervisor() {
+      return isAuthenticated() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'hr_director', 'hr_officer', 'supervisor'];
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (isOwner(userId) || isAdmin());
+      allow create: if isAuthenticated() && isOwner(userId);
+      allow update: if isAuthenticated() && (isOwner(userId) || isAdmin());
+      allow delete: if isAdmin();
+
+      // User documents sub-collection
+      match /documents/{docId} {
+        allow read: if isAuthenticated() && (isOwner(userId) || isAdmin());
+        allow write: if isAuthenticated() && (isOwner(userId) || isAdmin());
+      }
+
+      // Skills audit sub-collection
+      match /skillsAudit/{auditId} {
+        allow read: if isAuthenticated() && (isOwner(userId) || isAdmin());
+        allow write: if isAuthenticated() && (isOwner(userId) || isAdmin());
+      }
+
+      // SPAS sub-collection
+      match /spas/{appraisalId} {
+        allow read: if isAuthenticated() && (isOwner(userId) || isSupervisor());
+        allow write: if isAuthenticated() && (isOwner(userId) || isSupervisor());
+      }
+    }
+
+    // Performance contracts (department level)
+    match /performanceContracts/{contractId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    // Departments
+    match /departments/{deptId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    // Admin collection - only admins can read/write
+    match /adminSettings/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Audit logs
+    match /auditLogs/{logId} {
+      allow read: if isAdmin();
+      allow create: if isAuthenticated();
+      allow update, delete: if false;
+    }
+
+    // Reports
+    match /reports/{reportId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    // Notifications
+    match /notifications/{userId}/{notifId} {
+      allow read, write: if isAuthenticated() && isOwner(userId);
+    }
+  }
+}

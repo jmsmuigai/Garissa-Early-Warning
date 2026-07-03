@@ -330,7 +330,7 @@ def assess_infrastructure_risk(infra_gdf, label, flood_union, extreme_risk, high
         infra_gdf['Resource_Demand_Multiplier'] = infra_gdf.apply(get_water_demand, axis=1)
 
     # 5. Emojis and descriptions based on asset class
-    emojis = {"Schools": "🏫", "Health Facilities": "🏥", "Boreholes": "💧", "IDP Camps": "🏕️", "Towns": "🏘️", "Roads": "🛣️", "Wildlife": "🦒", "Water Pans": "🪣", "Cadastral Parcels": "🗺️"}
+    emojis = {"Schools": "🏫", "Health Facilities": "🏥", "Boreholes": "💧", "IDP Camps": "🏕️", "Towns": "🏘️", "Roads": "🛣️", "Wildlife": "🦒", "Water Pans": "🪣", "Cadastral Parcels": "🗺️", "Mosques": "🕌", "Bullas": "🛖", "Named POIs": "📍"}
     emoji = emojis.get(label, "📍")
     
     infra_gdf['marker_emoji'] = emoji
@@ -473,6 +473,9 @@ def run_risk_analysis():
         (["idp_camps_risk_assessed.geojson", "idp_camps.geojson"], "IDP Camps"),
         (["towns_Risk_Assessed.geojson", "towns.geojson"], "Towns"),
         (["OSM Roads/gis_osm_roads_free_1.shp", "PROJECTED ROADS.gpkg"], "Roads"),
+        (["garissa_mosques.geojson"], "Mosques"),
+        (["garissa_bullas.geojson"], "Bullas"),
+        (["garissa_pois.geojson"], "Named POIs"),
     ]
     
     for filenames, label in core_targets:
