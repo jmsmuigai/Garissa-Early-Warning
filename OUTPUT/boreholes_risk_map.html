@@ -1068,7 +1068,7 @@
             }
 
             if (typeof boreholesData !== 'undefined' && boreholesData.features && boreholesData.features.length > 0) {
-                overlays["💧 Boreholes (Styled)"] = L.geoJSON(boreholesData, {
+                overlays["💧 Boreholes (2022 Update)"] = L.geoJSON(boreholesData, {
                     pointToLayer: function(f, latlng) {
                         const risk = f.properties.Risk_Level || 'Safe';
                         return L.marker(latlng, { icon: getCyberIcon(riskColors[risk] || '#9ca3af', 'B') });
@@ -1093,7 +1093,7 @@
             }
 
             if (typeof waterPansData !== 'undefined' && waterPansData.features && waterPansData.features.length > 0) {
-                overlays["🪣 Rangeland Water Pans"] = L.geoJSON(waterPansData, {
+                overlays["🪣 Water Pans (2023 Update)"] = L.geoJSON(waterPansData, {
                     pointToLayer: function(f, latlng) {
                         return L.circleMarker(latlng, { radius: 5, color: '#00f3ff', fillColor: '#00f3ff', fillOpacity: 0.6 });
                     },
@@ -1168,7 +1168,7 @@
             }
 
             // Add layers according to default parameters
-            const defaults = ["\ud83d\udca7 Boreholes (Styled)", "\ud83e\udea3 Rangeland Water Pans", "Wards Boundaries", "Sub-Counties Boundaries", "\ud83d\udd34 High Risk Zone (~500m)", "\ud83d\udfe0 Medium Risk Zone (~1.5km)", "\ud83d\udfe3 Extreme Risk Zone (~5.5km)"];
+            const defaults = ["\ud83d\udca7 Boreholes (2022 Update)", "\ud83e\udea3 Water Pans (2023 Update)", "Wards Boundaries", "Sub-Counties Boundaries", "\ud83d\udd34 High Risk Zone (~500m)", "\ud83d\udfe0 Medium Risk Zone (~1.5km)", "\ud83d\udfe3 Extreme Risk Zone (~5.5km)"];
             for (let name in overlays) {
                 if (defaults.includes(name)) {
                     overlays[name].addTo(map);
@@ -1573,12 +1573,12 @@
                     const files = [
                         ['schoolsData', 'schools_risk_assessed.geojson'],
                         ['healthData', 'health_facilities_risk_assessed.geojson'],
-                        ['boreholesData', 'boreholes_risk_assessed.geojson'],
+                        ['boreholesData', 'boreholes_updated.geojson'],
                         ['campsData', 'idp_camps_risk_assessed.geojson'],
                         ['townsData', 'towns_risk_assessed.geojson'],
-                        ['waterPansData', 'water_pans_risk_assessed.geojson'],
+                        ['waterPansData', 'water_pans_updated.geojson'],
                         ['townsData', 'towns_risk_assessed.geojson'],
-                        ['waterPansData', 'water_pans_risk_assessed.geojson'],
+                        ['waterPansData', 'water_pans_updated.geojson'],
                         ['wildlifeData', 'wildlife_risk_assessed.geojson'],
                         ['roadsData', 'roads_risk_assessed.geojson'],
                         ['riversData', 'rivers.geojson'],

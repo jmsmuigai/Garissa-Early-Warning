@@ -944,6 +944,46 @@ def generate_dashboard():
             display: flex;
             flex-direction: column;
             gap: 20px;
+            color: #f1f5f9;
+        }
+
+        .narrative-content h1, .narrative-content h2, .narrative-content h3 {
+            color: #38bdf8;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+            padding-bottom: 5px;
+        }
+
+        .narrative-content p, .narrative-content li, .narrative-content th, .narrative-content td {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .narrative-content ul, .narrative-content ol {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .narrative-content li {
+            margin-bottom: 8px;
+        }
+
+        .narrative-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .narrative-content th, .narrative-content td {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            text-align: left;
+        }
+
+        .narrative-content th {
+            background-color: rgba(15, 23, 42, 0.6);
+            color: var(--cyan);
         }
         
         .story-chapter-section {

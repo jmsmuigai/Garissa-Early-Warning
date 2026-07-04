@@ -1116,7 +1116,7 @@ def get_leaflet_template(title, caption, download_filename, default_layers_json,
             }}
 
             if (typeof boreholesData !== 'undefined' && boreholesData.features && boreholesData.features.length > 0) {{
-                overlays["💧 Boreholes (Styled)"] = L.geoJSON(boreholesData, {{
+                overlays["💧 Boreholes (2022 Update)"] = L.geoJSON(boreholesData, {{
                     pointToLayer: function(f, latlng) {{
                         const risk = f.properties.Risk_Level || 'Safe';
                         return L.marker(latlng, {{ icon: getCyberIcon(riskColors[risk] || '#9ca3af', 'B') }});
@@ -1141,7 +1141,7 @@ def get_leaflet_template(title, caption, download_filename, default_layers_json,
             }}
 
             if (typeof waterPansData !== 'undefined' && waterPansData.features && waterPansData.features.length > 0) {{
-                overlays["🪣 Rangeland Water Pans"] = L.geoJSON(waterPansData, {{
+                overlays["🪣 Water Pans (2023 Update)"] = L.geoJSON(waterPansData, {{
                     pointToLayer: function(f, latlng) {{
                         return L.circleMarker(latlng, {{ radius: 5, color: '#00f3ff', fillColor: '#00f3ff', fillOpacity: 0.6 }});
                     }},
@@ -1621,12 +1621,12 @@ def get_leaflet_template(title, caption, download_filename, default_layers_json,
                     const files = [
                         ['schoolsData', 'schools_risk_assessed.geojson'],
                         ['healthData', 'health_facilities_risk_assessed.geojson'],
-                        ['boreholesData', 'boreholes_risk_assessed.geojson'],
+                        ['boreholesData', 'boreholes_updated.geojson'],
                         ['campsData', 'idp_camps_risk_assessed.geojson'],
                         ['townsData', 'towns_risk_assessed.geojson'],
-                        ['waterPansData', 'water_pans_risk_assessed.geojson'],
+                        ['waterPansData', 'water_pans_updated.geojson'],
                         ['townsData', 'towns_risk_assessed.geojson'],
-                        ['waterPansData', 'water_pans_risk_assessed.geojson'],
+                        ['waterPansData', 'water_pans_updated.geojson'],
                         ['wildlifeData', 'wildlife_risk_assessed.geojson'],
                         ['roadsData', 'roads_risk_assessed.geojson'],
                         ['riversData', 'rivers.geojson'],
@@ -1716,7 +1716,7 @@ def generate_all_interactive_maps():
     # 3. boreholes_risk_map.html
     print("📁 Overhauling boreholes_risk_map.html...")
     default_layers_boreholes = json.dumps([
-        "💧 Boreholes (Styled)", "🪣 Rangeland Water Pans", "Wards Boundaries", "Sub-Counties Boundaries",
+        "💧 Boreholes (2022 Update)", "🪣 Water Pans (2023 Update)", "Wards Boundaries", "Sub-Counties Boundaries",
         "🔴 High Risk Zone (~500m)", "🟠 Medium Risk Zone (~1.5km)", "🟣 Extreme Risk Zone (~5.5km)"
     ])
     with open(OUTPUT_DIR / "boreholes_risk_map.html", "w", encoding="utf-8") as f:
@@ -1777,7 +1777,7 @@ def generate_all_interactive_maps():
     # 7. garissa_master_drm_map.html
     print("📁 Overhauling garissa_master_drm_map.html...")
     default_layers_master = json.dumps([
-        "🏫 Schools (Styled)", "🏥 Health Clinics (Styled)", "💧 Boreholes (Styled)",
+        "🏫 Schools (Styled)", "🏥 Health Clinics (Styled)", "💧 Boreholes (2022 Update)",
         "⛺ Refugee & IDP Settlements", "Wards Boundaries", "Sub-Counties Boundaries",
         "Rivers & Drainage", "🔴 High Risk Zone (~500m)", "🌊 April 2024 Flood Baseline",
         "🕌 Mosques (Styled)", "🛖 Bullas/Neighborhoods", "📍 Named POIs"
@@ -1875,7 +1875,7 @@ def generate_all_interactive_maps():
     # 13. water_pans_risk_map.html
     print("📁 Generating water_pans_risk_map.html...")
     default_layers_water_pans = json.dumps([
-        "🪣 Rangeland Water Pans", "Wards Boundaries", "Sub-Counties Boundaries",
+        "🪣 Water Pans (2023 Update)", "Wards Boundaries", "Sub-Counties Boundaries",
         "🔴 High Risk Zone (~500m)", "🟠 Medium Risk Zone (~1.5km)", "🟣 Extreme Risk Zone (~5.5km)"
     ])
     with open(OUTPUT_DIR / "water_pans_risk_map.html", "w", encoding="utf-8") as f:
