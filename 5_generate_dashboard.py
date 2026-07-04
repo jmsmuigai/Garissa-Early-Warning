@@ -3600,7 +3600,7 @@ def generate_dashboard():
     html_content = html_content.replace("__NARRATIVE_STORY_HTML__", narrative_html)
     html_content = html_content.replace("__MAP_GALLERY_HTML__", gallery_html)
 
-    with open(OUTPUT_DIR / "garissa_flood_risk_dashboard.html", "w", encoding="utf-8") as f:
+    with open(OUTPUT_DIR / "index.html", "w", encoding="utf-8") as f:
         f.write(html_content)
     print("✅ Premium ARCgis HTML Dashboard Overhauled & Generated!")
 
