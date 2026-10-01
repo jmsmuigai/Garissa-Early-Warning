@@ -1,0 +1,21 @@
+{
+  "name": "Garissa County DRM Portal & Early Warning System",
+  "short_name": "GEWAS",
+  "description": "Garissa County Multi-Hazard Early Warning System.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#02040a",
+  "theme_color": "#02040a",
+  "icons": [
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Flag_of_Garissa_County.png/192px-Flag_of_Garissa_County.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Flag_of_Garissa_County.png/512px-Flag_of_Garissa_County.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
