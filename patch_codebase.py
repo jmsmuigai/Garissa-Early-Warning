@@ -416,7 +416,7 @@ def main():
     content = content.replace(old_onload, new_onload)
 
     # Update Gemini key fallback in triggerChatbotQuery
-    content = content.replace("localStorage.getItem('gemini_api_key') || 'AIzaSyDDZludrLe0owCB3jFvPWSp8b3ZBx5hBmQ'", 
+    content = content.replace("localStorage.getItem('gemini_api_key') || 'REMOVED_KEY'", 
                               "localStorage.getItem('gemini_api_key') || (typeof GEMINI_API_KEY !== 'undefined' ? GEMINI_API_KEY : '')")
 
     # Update setupAttributePopup function
