@@ -73,3 +73,10 @@ OUTPUT/*.gpkg
 OUTPUT/*.tif
 OUTPUT/*.tiff
 OUTPUT/*.aux.xml
+
+# Secrets and local environment (added by docs refresh)
+!.env.example
+*.pem
+*.key
+serviceAccount*.json
+node_modules/

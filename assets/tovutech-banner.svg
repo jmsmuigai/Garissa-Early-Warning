@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-label="Garissa Early Warning - Flood early-warning portal and GIS pipeline for Garissa">
+  <title>Garissa Early Warning</title>
+  <defs>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22D3EE"/>
+      <stop offset="0.5" stop-color="#22C55E"/>
+      <stop offset="1" stop-color="#F97316"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0.85" cy="0.2" r="0.6">
+      <stop offset="0" stop-color="#22C55E" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#0A0F2C" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.1" cy="1" r="0.55">
+      <stop offset="0" stop-color="#22D3EE" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#0A0F2C" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1280" height="320" fill="#0A0F2C"/>
+  <rect width="1280" height="320" fill="url(#glow1)"/>
+  <rect width="1280" height="320" fill="url(#glow2)"/>
+  <g stroke="url(#accent)" stroke-width="1.4" opacity="0.45">
+    <line x1="1052" y1="115" x2="1083" y2="149"/>
+    <line x1="1052" y1="115" x2="1005" y2="125"/>
+    <line x1="1083" y1="149" x2="1005" y2="125"/>
+    <line x1="1178" y1="171" x2="1177" y2="173"/>
+    <line x1="1178" y1="171" x2="1235" y2="193"/>
+    <line x1="1005" y1="125" x2="987" y2="174"/>
+    <line x1="1093" y1="287" x2="1140" y2="248"/>
+    <line x1="1083" y1="149" x2="1093" y2="287"/>
+    <line x1="924" y1="276" x2="918" y2="284"/>
+    <line x1="924" y1="276" x2="914" y2="241"/>
+    <line x1="1052" y1="115" x2="987" y2="174"/>
+    <line x1="1243" y1="66" x2="1220" y2="56"/>
+    <line x1="1178" y1="171" x2="1243" y2="66"/>
+    <line x1="914" y1="241" x2="918" y2="284"/>
+    <line x1="1178" y1="171" x2="1220" y2="56"/>
+    <line x1="1140" y1="248" x2="1177" y2="173"/>
+    <line x1="1177" y1="173" x2="1235" y2="193"/>
+  </g>
+  <g>
+    <circle cx="1052" cy="115" r="9" fill="#22D3EE" opacity="0.15"/>
+    <circle cx="1052" cy="115" r="4" fill="#22D3EE" opacity="0.9"/>
+    <circle cx="1083" cy="149" r="8" fill="#22C55E" opacity="0.15"/>
+    <circle cx="1083" cy="149" r="3" fill="#22C55E" opacity="0.9"/>
+    <circle cx="1178" cy="171" r="8" fill="#F97316" opacity="0.15"/>
+    <circle cx="1178" cy="171" r="3" fill="#F97316" opacity="0.9"/>
+    <circle cx="1005" cy="125" r="10" fill="#22D3EE" opacity="0.15"/>
+    <circle cx="1005" cy="125" r="5" fill="#22D3EE" opacity="0.9"/>
+    <circle cx="1093" cy="287" r="10" fill="#22C55E" opacity="0.15"/>
+    <circle cx="1093" cy="287" r="5" fill="#22C55E" opacity="0.9"/>
+    <circle cx="924" cy="276" r="9" fill="#F97316" opacity="0.15"/>
+    <circle cx="924" cy="276" r="4" fill="#F97316" opacity="0.9"/>
+    <circle cx="987" cy="174" r="8" fill="#22D3EE" opacity="0.15"/>
+    <circle cx="987" cy="174" r="3" fill="#22D3EE" opacity="0.9"/>
+    <circle cx="1243" cy="66" r="10" fill="#22C55E" opacity="0.15"/>
+    <circle cx="1243" cy="66" r="5" fill="#22C55E" opacity="0.9"/>
+    <circle cx="914" cy="241" r="8" fill="#F97316" opacity="0.15"/>
+    <circle cx="914" cy="241" r="3" fill="#F97316" opacity="0.9"/>
+    <circle cx="918" cy="284" r="10" fill="#22D3EE" opacity="0.15"/>
+    <circle cx="918" cy="284" r="5" fill="#22D3EE" opacity="0.9"/>
+    <circle cx="1220" cy="56" r="9" fill="#22C55E" opacity="0.15"/>
+    <circle cx="1220" cy="56" r="4" fill="#22C55E" opacity="0.9"/>
+    <circle cx="1140" cy="248" r="10" fill="#F97316" opacity="0.15"/>
+    <circle cx="1140" cy="248" r="5" fill="#F97316" opacity="0.9"/>
+    <circle cx="1177" cy="173" r="10" fill="#22D3EE" opacity="0.15"/>
+    <circle cx="1177" cy="173" r="5" fill="#22D3EE" opacity="0.9"/>
+    <circle cx="1235" cy="193" r="8" fill="#22C55E" opacity="0.15"/>
+    <circle cx="1235" cy="193" r="3" fill="#22C55E" opacity="0.9"/>
+  </g>
+  <rect x="64" y="70" width="8" height="150" rx="4" fill="url(#accent)"/>
+  <text x="96" y="132" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="64" font-weight="700" fill="#FFFFFF">Garissa Early Warning</text>
+  <text x="98" y="182" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="26" fill="#CBD5E1">Flood early-warning portal and GIS pipeline for Garissa</text>
+  <rect x="98" y="206" width="300" height="4" rx="2" fill="url(#accent)"/>
+  <text x="98" y="272" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#22D3EE">TovuTech · tovutech.com</text>
+  <rect x="0" y="314" width="1280" height="6" fill="url(#accent)"/>
+</svg>
